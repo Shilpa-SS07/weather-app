@@ -17,7 +17,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                bat 'docker run -d -p 3000:3000 weather-app'
+                bat 'docker run -d -p 5173:5173 weather-app'
             }
         }
     }
