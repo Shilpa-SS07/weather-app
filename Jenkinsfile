@@ -7,7 +7,7 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
+        stage('Clone Code') {
             steps {
                 git 'https://github.com/Shilpa-SS07/weather-app.git'
             }
@@ -16,9 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 bat '''
-                docker build ^
-                --build-arg VITE_WEATHER_API_KEY=%VITE_WEATHER_API_KEY% ^
-                -t weather-app .
+                docker build --build-arg VITE_WEATHER_API_KEY=%VITE_WEATHER_API_KEY% -t weather-app .
                 '''
             }
         }
