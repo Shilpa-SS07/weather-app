@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://your-repo-url.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t weather-app .'
