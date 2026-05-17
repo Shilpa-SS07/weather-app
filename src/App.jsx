@@ -10,15 +10,14 @@ export default function App() {
   const [selectedDay, setSelectedDay] = useState(null);
 
   // SEARCH HISTORY
-
   const [history, setHistory] = useState(
     JSON.parse(localStorage.getItem("cities")) || []
   );
 
+  // ✅ FIX ONLY: correct Vite env variable name
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
   // LIVE CLOCK
-
   useEffect(() => {
 
     const timer = setInterval(() => {
@@ -30,7 +29,6 @@ export default function App() {
   }, []);
 
   // GET WEATHER BY CITY
-
   const getWeather = async (searchCity = city) => {
 
     if (!searchCity) {
@@ -53,7 +51,6 @@ export default function App() {
         setWeather(data);
 
         // SAVE SEARCH HISTORY
-
         const updatedHistory = [
           searchCity,
           ...history.filter((item) => item !== searchCity)
@@ -85,7 +82,6 @@ export default function App() {
   };
 
   // GET WEATHER BY LOCATION
-
   const getLocationWeather = () => {
 
     if (!navigator.geolocation) {
@@ -145,11 +141,9 @@ export default function App() {
   };
 
   // WEATHER TYPE
-
-  const weatherMain = weather?.list[0]?.weather[0]?.main;
+  const weatherMain = weather?.list?.[0]?.weather?.[0]?.main;
 
   // WEATHER ALERTS
-
   const getWeatherAlert = () => {
 
     if (!weather) return null;
@@ -195,7 +189,6 @@ export default function App() {
   const alert = getWeatherAlert();
 
   // AI WEATHER ADVICE
-
   const getAdvice = () => {
 
     if (!weather) return "";
@@ -224,7 +217,6 @@ export default function App() {
   };
 
   // DYNAMIC BACKGROUND
-
   const hour = new Date().getHours();
 
   const backgroundClass =
@@ -241,8 +233,7 @@ export default function App() {
     <div className={`min-h-screen overflow-hidden relative bg-gradient-to-br ${backgroundClass} flex items-center justify-center p-6 transition-all duration-700`}>
 
       {/* NIGHT STARS */}
-
-      {weather?.list[0]?.weather[0]?.icon.includes("n") && (
+      {weather?.list?.[0]?.weather?.[0]?.icon?.includes("n") && (
 
         <Particles
           options={{
@@ -268,11 +259,9 @@ export default function App() {
       )}
 
       {/* MAIN CARD */}
-
       <div className="w-full max-w-6xl bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 relative z-10">
 
         {/* TITLE */}
-
         <h1 className="text-5xl font-bold text-white text-center">
           Weather Dashboard
         </h1>
@@ -282,15 +271,11 @@ export default function App() {
         </p>
 
         {/* LIVE CLOCK */}
-
         <h2 className="text-center text-white text-2xl mt-5 font-semibold">
-
           {time.toLocaleTimeString()}
-
         </h2>
 
         {/* SEARCH */}
-
         <div className="flex flex-col md:flex-row gap-4 mt-8">
 
           <input
@@ -318,7 +303,6 @@ export default function App() {
         </div>
 
         {/* SEARCH HISTORY */}
-
         {history.length > 0 && (
 
           <div className="mt-5 flex flex-wrap gap-3">
@@ -343,7 +327,6 @@ export default function App() {
         )}
 
         {/* ERROR */}
-
         {error && (
 
           <p className="text-red-200 mt-6 text-center font-semibold">
@@ -353,13 +336,11 @@ export default function App() {
         )}
 
         {/* WEATHER */}
-
         {weather && (
 
           <div className="mt-10 bg-white rounded-3xl p-8 shadow-xl">
 
             {/* TOP SECTION */}
-
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
               <div>
@@ -373,7 +354,6 @@ export default function App() {
                 </p>
 
                 {/* DATE & TIME */}
-
                 <p className="text-gray-500 mt-2">
 
                   {new Date(
@@ -390,17 +370,13 @@ export default function App() {
                 </p>
 
                 {/* ALERT */}
-
                 <div
                   className={`mt-5 border px-4 py-3 rounded-2xl font-semibold animate-pulse ${alert.style}`}
                 >
-
                   {alert.text}
-
                 </div>
 
                 {/* AI ADVICE */}
-
                 <div className="mt-4 bg-slate-100 p-4 rounded-2xl text-gray-700 font-medium">
                   {getAdvice()}
                 </div>
@@ -408,7 +384,6 @@ export default function App() {
               </div>
 
               {/* WEATHER ICON */}
-
               <img
                 src={`https://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}@2x.png`}
                 alt="weather"
@@ -418,7 +393,6 @@ export default function App() {
             </div>
 
             {/* TEMPERATURE */}
-
             <div className="mt-8 flex items-end gap-3 justify-center md:justify-start">
 
               <span className="text-7xl font-bold text-gray-800">
@@ -432,55 +406,29 @@ export default function App() {
             </div>
 
             {/* WEATHER INFO */}
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
 
               <div className="bg-slate-100 p-5 rounded-2xl text-center hover:scale-105 transition">
-
                 <p className="text-2xl">💧</p>
-
-                <p className="font-semibold mt-2">
-                  Humidity
-                </p>
-
-                <p className="text-gray-600">
-                  {weather.list[0].main.humidity}%
-                </p>
-
+                <p className="font-semibold mt-2">Humidity</p>
+                <p className="text-gray-600">{weather.list[0].main.humidity}%</p>
               </div>
 
               <div className="bg-slate-100 p-5 rounded-2xl text-center hover:scale-105 transition">
-
                 <p className="text-2xl">🌬️</p>
-
-                <p className="font-semibold mt-2">
-                  Wind
-                </p>
-
-                <p className="text-gray-600">
-                  {weather.list[0].wind.speed} km/h
-                </p>
-
+                <p className="font-semibold mt-2">Wind</p>
+                <p className="text-gray-600">{weather.list[0].wind.speed} km/h</p>
               </div>
 
               <div className="bg-slate-100 p-5 rounded-2xl text-center hover:scale-105 transition">
-
                 <p className="text-2xl">🌡️</p>
-
-                <p className="font-semibold mt-2">
-                  Feels Like
-                </p>
-
-                <p className="text-gray-600">
-                  {Math.round(weather.list[0].main.feels_like)}°
-                </p>
-
+                <p className="font-semibold mt-2">Feels Like</p>
+                <p className="text-gray-600">{Math.round(weather.list[0].main.feels_like)}°</p>
               </div>
 
             </div>
 
             {/* SUNRISE SUNSET */}
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
 
               <div className="bg-gradient-to-r from-yellow-200 via-orange-300 to-pink-400 p-6 rounded-3xl shadow-lg hover:scale-105 transition">
@@ -488,27 +436,13 @@ export default function App() {
                 <div className="flex items-center justify-between">
 
                   <div>
-
-                    <h3 className="text-2xl font-bold text-white">
-                      🌅 Sunrise
-                    </h3>
-
+                    <h3 className="text-2xl font-bold text-white">🌅 Sunrise</h3>
                     <p className="text-white text-lg mt-2">
-
-                      {new Date(
-                        weather.city.sunrise * 1000
-                      ).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
-
+                      {new Date(weather.city.sunrise * 1000).toLocaleTimeString()}
                     </p>
-
                   </div>
 
-                  <div className="text-6xl animate-pulse">
-                    ☀️
-                  </div>
+                  <div className="text-6xl animate-pulse">☀️</div>
 
                 </div>
 
@@ -519,27 +453,13 @@ export default function App() {
                 <div className="flex items-center justify-between">
 
                   <div>
-
-                    <h3 className="text-2xl font-bold text-white">
-                      🌇 Sunset
-                    </h3>
-
+                    <h3 className="text-2xl font-bold text-white">🌇 Sunset</h3>
                     <p className="text-white text-lg mt-2">
-
-                      {new Date(
-                        weather.city.sunset * 1000
-                      ).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "numeric",
-                      })}
-
+                      {new Date(weather.city.sunset * 1000).toLocaleTimeString()}
                     </p>
-
                   </div>
 
-                  <div className="text-6xl animate-bounce">
-                    🌙
-                  </div>
+                  <div className="text-6xl animate-bounce">🌙</div>
 
                 </div>
 
@@ -548,7 +468,6 @@ export default function App() {
             </div>
 
             {/* 5 DAY FORECAST */}
-
             <h2 className="text-3xl font-bold text-gray-800 mt-12 text-center">
               5-Day Forecast
             </h2>
@@ -567,14 +486,9 @@ export default function App() {
                   >
 
                     <h3 className="font-bold text-lg">
-
-                      {new Date(item.dt_txt).toLocaleDateString(
-                        "en-US",
-                        {
-                          weekday: "short",
-                        }
-                      )}
-
+                      {new Date(item.dt_txt).toLocaleDateString("en", {
+                        weekday: "short",
+                      })}
                     </h3>
 
                     <img
@@ -598,7 +512,6 @@ export default function App() {
             </div>
 
             {/* DETAILED FORECAST */}
-
             {selectedDay && (
 
               <div className="mt-12">
@@ -621,15 +534,10 @@ export default function App() {
                       >
 
                         <h3 className="text-xl font-bold text-gray-800">
-
-                          {new Date(item.dt_txt).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "numeric",
-                              minute: "numeric",
-                            }
-                          )}
-
+                          {new Date(item.dt_txt).toLocaleTimeString("en", {
+                            hour: "numeric",
+                            minute: "numeric",
+                          })}
                         </h3>
 
                         <img
@@ -647,17 +555,11 @@ export default function App() {
                         </p>
 
                         <div className="mt-4 space-y-2 text-gray-700">
-
                           <p>💧 Humidity: {item.main.humidity}%</p>
-
                           <p>🌬 Wind: {item.wind.speed} km/h</p>
-
                           <p>🌡 Feels Like: {Math.round(item.main.feels_like)}°</p>
-
                           <p>🌧 Rain Chance: {Math.round(item.pop * 100)}%</p>
-
                           <p>🔽 Pressure: {item.main.pressure} hPa</p>
-
                         </div>
 
                       </div>
@@ -675,8 +577,6 @@ export default function App() {
         )}
 
       </div>
-
     </div>
-
   );
 }
