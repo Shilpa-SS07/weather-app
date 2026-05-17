@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git 'https://github.com/Shilpa-SS07/weather-app.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 bat '''
