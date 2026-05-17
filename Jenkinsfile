@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        VITE_API_KEY = credentials('weather-api-key')
+        VITE_WEATHER_API_KEY = credentials('weather-api-key')
     }
 
     stages {
 
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/Shilpa-SS07/weather-app.git'
+                git 'https://your-repo-url.git'
             }
         }
 
@@ -19,11 +19,11 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Run Container') {
             steps {
                 bat '''
-                docker rm -f weather-app-container 2>nul
-                docker run -d --name weather-app-container -p 3000:5173 -e VITE_API_KEY=%VITE_API_KEY% weather-app
+                docker rm -f weather-app-container || exit 0
+                docker run -d --name weather-app-container -p 3000:5173 -e VITE_WEATHER_API_KEY=%VITE_WEATHER_API_KEY% weather-app
                 '''
             }
         }
